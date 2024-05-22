@@ -12,12 +12,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 
 function FirebaseFirestore() {
+  // initialisation
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [id, setId] = useState("");
   const [imageUpload, setImageUpload] = useState(null);
   const [val, setVal] = useState([]);
 
+  // creation de la collection au niveau de notre BD
   const value = collection(fireDb, "demo");
 
   useEffect(() => {
@@ -29,16 +31,17 @@ function FirebaseFirestore() {
   }, []);
 
   const handleCreateAndUpload = async () => {
+    // verifier si les champs sont vide
     if (!fname || !lname) {
       toast.error("champ requis");
       return;
     }
-
+    // verifier si le champ image est vide
     if (imageUpload === null) {
       toast.error("ajouter unne image");
       return;
     }
-
+    // creation du dossier de stockage  et la synchronisation de l'image ajoutée
     const imageRef = storageRef(storage, `products/${uuid()}`);
 
     try {
